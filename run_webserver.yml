@@ -1,0 +1,17 @@
+- hosts: all
+  tasks:
+  - name: "Installing Httpd software" 
+    package:
+      name: "httpd"
+      state: present
+  - name: "copying html file"
+    template:
+     dest: "/var/www/html/index.html"  
+     src: "/root/ws2/app.html"   
+    notify: Restart httpd service
+
+  handlers:
+  - name: Restart httpd service
+    service:
+      name: httpd
+      state: restarted
